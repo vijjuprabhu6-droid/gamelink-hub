@@ -1,0 +1,67 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UpdateGameLinkRequest = 
+ record {
+   description: text;
+   image: ExternalBlob;
+   title: text;
+   url: text;
+ };
+type GameLinkId = nat;
+type GameLink = 
+ record {
+   description: text;
+   id: GameLinkId;
+   image: ExternalBlob;
+   submittedAt: int;
+   submittedBy: principal;
+   title: text;
+   updatedAt: int;
+   url: text;
+ };
+type ExternalBlob = blob;
+type CreateGameLinkRequest = 
+ record {
+   description: text;
+   image: ExternalBlob;
+   title: text;
+   url: text;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addGameLink: (req: CreateGameLinkRequest) -> (GameLink);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteGameLink: (id: GameLinkId) -> ();
+  getCallerUserRole: () -> (UserRole) query;
+  getGameLink: (id: GameLinkId) -> (opt GameLink) query;
+  isCallerAdmin: () -> (bool) query;
+  listGameLinks: () -> (vec GameLink) query;
+  searchGameLinks: (term: text) -> (vec GameLink) query;
+  updateGameLink: (id: GameLinkId, req: UpdateGameLinkRequest) -> (GameLink);
+}

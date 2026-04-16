@@ -1,0 +1,20 @@
+{
+  "overview": "A community-driven platform where anyone can add and share game links pointing to official sources like Steam, Epic Games, and itch.io. Features user authentication, image uploads, and real-time search.",
+  "features": [
+    "Community game link submissions by any logged-in user",
+    "Browse and search the full game library",
+    "Add games with title, description, image, and external URL",
+    "Edit or delete your own submissions",
+    "Responsive grid layout for desktop and mobile",
+    "Internet Identity login"
+  ],
+  "category": "community",
+  "tags": [
+    "games",
+    "community",
+    "links",
+    "discovery",
+    "sharing"
+  ],
+  "last_updated": "2026-04-16T07:59:31.536Z"
+}
